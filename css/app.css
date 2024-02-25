@@ -1,0 +1,115 @@
+#area-main2 {
+    width: 100vw;
+    overflow-y: visible;
+    overflow-x: visible;
+    height: 1000px;
+    position: relative;
+}
+
+:root {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--black);
+
+    --black: rgb(25,28,35);
+    --semiblack: rgb(105,108,115);
+    --semiwhite: rgb(215,218,225);
+    --white: rgb(255,255,255);
+}
+
+body {
+    overflow-x: scroll;
+    width: 100vw;
+    height: 100vh;
+
+    background: var(--white);
+    background-attachment: fixed;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+#area-main a {
+    font-size: 24px;
+    width: 120px;
+    height: 90px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: absolute;
+    background: var(--semiwhite);
+}
+
+#area-main img {
+    border-radius: 15px;
+}
+
+#area-main path {
+    z-index: -1;
+    stroke: var(--semiblack);
+    stroke-width: 10px;
+
+    overflow: visible;
+}
+
+#area-main div:before {
+    content: ' ';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background: var(--semiblack);
+
+    margin-top: -8px;
+    margin-left: -8px;
+
+    filter: drop-shadow(0 0 15px var(--semiblack));
+}
+
+#ui-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: calc(100vw - 20px);
+    padding-top: 10px;
+
+    z-index: 1;
+}
+
+#ui-right {
+    text-align: right;
+}
+
+input, #area-main img {
+    border: solid var(--semiwhite) 2px;
+    width: 116px;
+    height: 86px;
+}
+
+
+input {
+    border-radius: 1rem;
+    height: 1rem;
+}
+
+#ui-wrap, input {
+    font-size: 16px;
+}
+
+text {
+    font-size: 5px;
+    transition: ease-in-out 0.3s all;
+}
+
+a:hover text {
+    font-size: 8px;
+}
+
+.red text {
+    fill: red;
+}
