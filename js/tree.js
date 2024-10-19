@@ -16,7 +16,7 @@ function escapeHtml(unsafe) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
-function genElement(type, area, content, attribs) {
+function genElement(type, area, content, attribs, open = false) {
 
     var directAttribs = attribs.direct || {};
     var styleAttribs = attribs.style || {};
@@ -35,7 +35,13 @@ function genElement(type, area, content, attribs) {
         elem += `${escapeHtml(attrib)}="${escapeHtml(directAttribs[attrib])}" `;
     });
 
+    if (open) {
+
+    elem = `<${type} ${elem}>${content}`
+    } else {
+
     elem = `<${type} ${elem}>${content}</${type}>`
+    }
 
     cache += elem;
 
@@ -51,7 +57,7 @@ function genEntry(posEntry, area, fetchData) {
     var x2 = x * zoom + mpos[0];
     var y2 = y * zoom + mpos[1];
 
-    if (y2 < -250 || y2 > area2.clientHeight+ 250) return;
+    if (y2 < -1000 || y2 > area2.clientHeight+ 1000) return;
 
     if (y > 0) {
         genElement('path', area, '', {
@@ -76,7 +82,7 @@ function genEntry(posEntry, area, fetchData) {
             'href': `https://scratch.mit.edu/projects/${posEntry.id}`,
             'class': `${posEntry.visible ? '' : 'red'}`,
         }
-    });
+    }, true);
 
     genElement('image', a, '', {
         'direct': {
@@ -86,6 +92,8 @@ function genEntry(posEntry, area, fetchData) {
             'width': '100'
         }
     });
+
+    cache += '</a>';
 
     let text = [
         `${posEntry.name}`,
@@ -138,7 +146,7 @@ async function genTree(id) {
             genEntry(posEntry, area, fetchData);
         }
         area.innerHTML = cache;
-    }, 1000)
+    }, 300)
 
     return pos;
 }
