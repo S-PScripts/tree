@@ -1,5 +1,5 @@
 
-function genPos(id, fetchData) {
+function genPos(id, fetchData, k) {
 	let queue = [id];
 
 	let queueHead;
@@ -15,7 +15,7 @@ function genPos(id, fetchData) {
 		"date": fetchData[id].datetime_shared,
 		"user": fetchData[id].username,
 		"visible": status,
-		"x": '0',
+		"x": k + '',
 		"y": 0,
 		"offbranch": 0,
 		"end": fetchData[id].children.length
@@ -94,9 +94,19 @@ function sortPos(a, b) {
 
 
 async function main(fetchData) {
-	let rootId = fetchData['root_id'];
+	//let rootId = fetchData['root_id'];
 
-	let pos = genPos(rootId, fetchData);
+	let pos = [];
+	
+	let filteredFetch = Object.keys(fetchData).filter(x => {
+		let a = fetchData[fetchData[x].parent_id];
+		if (a && a.children.length < 1) a.children = [x]
+		return x != 'root_id' && !a
+	}).sort((a,b) => a - b);
+	for (let rootId in filteredFetch) {
+		pos = [...pos,...genPos(filteredFetch[rootId], fetchData, rootId)];
+	}
+
 
 	let posX = [];
 
